@@ -1,4 +1,16 @@
-Project 16
+# PROJECT 16
+
+# AUTOMATE INFRASTRUCTURE WITH IAC USING TERRAFORM PART 1
+
+After you have built AWS infrastructure for 2 websites manually, it is time to automate the process using Terraform.
+
+Let us start building the same set up with the power of Infrastructure as Code (IaC)
+
+Below is the diagram of our infastructure
+
+![our infastructure](./images/infastructure1.PNG)
+![our infastructure](./images/infastructure2.PNG)
+
 
 VPC | SUBNETS | SECURITY GROUPS
 
