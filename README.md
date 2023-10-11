@@ -35,14 +35,14 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.0"
+      version = "~> 5.0"
     }
   }
 }
 
 # Configure the AWS Provider
 provider "aws" {
-  region = var.aws_region
+  region = var.region
 }
 ```
 
@@ -377,9 +377,6 @@ resource "aws_vpc" "main" {
   cidr_block                     = var.vpc_cidr
   enable_dns_support             = var.enable_dns_support 
   enable_dns_hostnames           = var.enable_dns_support
-  enable_classiclink             = var.enable_classiclink
-  enable_classiclink_dns_support = var.enable_classiclink
-
 }
 
 # Create public subnets
@@ -414,6 +411,15 @@ data "aws_availability_zones" "available" {
 state = "available"
 }
 
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
 provider "aws" {
   region = var.region
 }
@@ -423,10 +429,11 @@ resource "aws_vpc" "main" {
   cidr_block                     = var.vpc_cidr
   enable_dns_support             = var.enable_dns_support 
   enable_dns_hostnames           = var.enable_dns_support
-  enable_classiclink             = var.enable_classiclink
-  enable_classiclink_dns_support = var.enable_classiclink
 
-}
+  tags = {
+    Name = "onyi-support-vpc"
+  }
+ }
 
 # Create public subnets
 resource "aws_subnet" "public" {
@@ -441,31 +448,23 @@ resource "aws_subnet" "public" {
 ## variables.tf
 ```
 variable "region" {
-      default = "us-east-2"
+  default = "us-east-2"
 }
 
 variable "vpc_cidr" {
-    default = "172.16.0.0/16"
+  default = "172.16.0.0/16"
 }
 
 variable "enable_dns_support" {
-    default = "true"
+  default = "true"
 }
 
 variable "enable_dns_hostnames" {
-    default ="true" 
+  default ="true" 
 }
 
-variable "enable_classiclink" {
-    default = "false"
-}
-
-variable "enable_classiclink_dns_support" {
-    default = "false"
-}
-
-  variable "preferred_number_of_public_subnets" {
-      default = null
+variable "preferred_number_of_public_subnets" {
+  default = null
 }
 ```
 ## terraform.tfvars
